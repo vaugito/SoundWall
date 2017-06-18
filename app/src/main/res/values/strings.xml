@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SoundWall</string>
+    <string name="brownToggleButton">Brown Noise</string>
+    <string name="whiteToggleButton">White Noise</string>
+    <string name="pinkToggleButton">Pink Noise</string>
+
+</resources>

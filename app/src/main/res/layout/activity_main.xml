@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vaughnx.soundwall.MainActivity">
+
+    <ToggleButton
+        android:id="@+id/brownToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="@string/brownToggleButton"
+        android:textOff="@string/brownToggleButton"
+        android:textOn="@string/brownToggleButton"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="144dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ToggleButton
+        android:id="@+id/whiteToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/whiteToggleButton"
+        android:textOff="@string/whiteToggleButton"
+        android:textOn="@string/whiteToggleButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ToggleButton
+        android:id="@+id/pinkNoiseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/brownToggleButton"
+        android:layout_marginTop="38dp"
+        android:text="ToggleButton"
+        android:textOff="@string/pinkToggleButton"
+        android:textOn="@string/pinkToggleButton"
+        android:layout_alignEnd="@+id/brownToggleButton"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

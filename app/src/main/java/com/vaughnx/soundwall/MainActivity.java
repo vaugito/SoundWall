@@ -6,6 +6,15 @@ import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+
+/*
+Created by: Justin Clark
+Company: VaughnX
+Purpose: To block out external sound using white, brown, and pink noise.
+To do:  -Increase duration of brown and pink noise files.
+        -use seek slider as an in-app volume controller
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

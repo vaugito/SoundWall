@@ -1,12 +1,3 @@
-package com.vaughnx.soundwall;
-
-import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
-
-
 /*
 Created by: Justin Clark
 Company: VaughnX
@@ -14,41 +5,68 @@ Purpose: To block out external sound using white, brown, and pink noise.
 To do:  -Increase duration of brown and pink noise files.
         -use seek slider as an in-app volume controller
  */
+package com.vaughnx.vaugi.soundwall;
+
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+import android.media.MediaPlayer;
 
 public class MainActivity extends AppCompatActivity {
+
+    private SeekBar whiteVolumeSeekBar;
+    private SeekBar pinkVolumeSeekBar;
+    private SeekBar brownVolumeSeekBar;
+    private int maxVolume;
+    private int curVOlume;
+    private MediaPlayer whiteNoiseMP;
+    private MediaPlayer brownNoiseMP;
+    private MediaPlayer pinkNoiseMP;
+    private ToggleButton whiteNoiseToggle;
+    private ToggleButton brownNoiseToggle;
+    private ToggleButton pinkNoiseToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    final MediaPlayer whiteNoiseMP = MediaPlayer.create(this, R.raw.whitenoise);
-    final MediaPlayer brownNoiseMP = MediaPlayer.create(this, R.raw.brownnoise);
-    final MediaPlayer pinkNoiseMP = MediaPlayer.create(this, R.raw.pinknoise);
-    ToggleButton whiteNoiseToggle = (ToggleButton) findViewById(R.id.whiteToggleButton);
-    whiteNoiseToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked) {
-                // The toggle is enabled
-                whiteNoiseMP.start();
-            } else {
-                // The toggle is disabled
-                whiteNoiseMP.pause();
+
+        //Sets up white, brown, and pink noise players. Uses toggle buttons to turn sound on
+        //and off.
+        whiteNoiseMP = MediaPlayer.create(MainActivity.this, R.raw.whitenoise);
+        brownNoiseMP = MediaPlayer.create(MainActivity.this, R.raw.brownnoise);
+        pinkNoiseMP = MediaPlayer.create(MainActivity.this, R.raw.pinknoise);
+        whiteNoiseToggle = (ToggleButton) findViewById(R.id.whitenoisebutton);
+        whiteNoiseToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    whiteNoiseMP.start();
+                } else {
+                    // The toggle is disabled
+                    whiteNoiseMP.pause();
+                }
             }
-        }
-    });
-    ToggleButton brownNoiseToggle = (ToggleButton) findViewById(R.id.brownToggleButton);
-    brownNoiseToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked) {
-                // The toggle is enabled
-                brownNoiseMP.start();
-            } else {
-                // The toggle is disabled
-                brownNoiseMP.pause();
+        });
+        brownNoiseToggle = (ToggleButton) findViewById(R.id.brownnoisebutton);
+        brownNoiseToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    brownNoiseMP.start();
+                } else {
+                    // The toggle is disabled
+                    brownNoiseMP.pause();
+                }
             }
-        }
-    });
-        ToggleButton pinkNoiseToggle = (ToggleButton) findViewById(R.id.pinkNoiseButton);
+        });
+        pinkNoiseToggle = (ToggleButton) findViewById(R.id.pinknoisebutton);
         pinkNoiseToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -60,4 +78,82 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-}}
+        //End of sound controller initializations
+
+        //Start of control volume with sliders//
+        try{
+            whiteVolumeSeekBar = (SeekBar) findViewById(R.id.whiteVolumeSeekBar);
+            whiteVolumeSeekBar.setMax(100);
+            whiteVolumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                    float log1 = (float) (Math.log(50-progress)/Math.log(50));
+                    whiteNoiseMP.setVolume(1-log1, 1-log1);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+            pinkVolumeSeekBar.setProgress(25);
+        } catch (Exception e){
+            Log.e("Exception", e.getMessage());
+        }
+        try{
+            pinkVolumeSeekBar = (SeekBar) findViewById(R.id.pinkVolumeSeekBar);
+            pinkVolumeSeekBar.setMax(100);
+            pinkVolumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                    float log1 = (float) (Math.log(50-progress)/Math.log(50));
+                    pinkNoiseMP.setVolume(1-log1, 1-log1);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+            pinkVolumeSeekBar.setProgress(25);
+        } catch (Exception e){
+            Log.e("Exception", e.getMessage());
+        }
+        try{
+            brownVolumeSeekBar = (SeekBar) findViewById(R.id.brownVolumeSeekBar);
+            brownVolumeSeekBar.setMax(50);
+            brownVolumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                    float log1 = (float) (Math.log(50-progress)/Math.log(50));
+                    brownNoiseMP.setVolume(1-log1, 1-log1);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+            brownVolumeSeekBar.setProgress(25);
+
+        } catch (Exception e){
+            Log.e("Exception", e.getMessage());
+        }
+        //end of volume controller
+    }
+}
